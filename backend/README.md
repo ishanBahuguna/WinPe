@@ -18,3 +18,12 @@ added : type:"module" --> we can directly use import statements instead of requi
 
 
 npm i --save @types/dependecies --> install types/tools as dev dependencies because be don't need types in production we only need javascript
+
+# zod:
+for request body authentication
+
+# multer :
+used for multipart forms
+
+# twilio :
+used for OTP authentication

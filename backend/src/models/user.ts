@@ -16,15 +16,13 @@ const UserSchema = new mongoose.Schema(
   {
     userName: {
       type: String,
-      default: () => {
-        return generateRandomName();
-      },
-      trim:true
+      trim:true,
+      required:[true , "Please enter user's name"]
     },
 
     phoneNumber : {
-        type: Number,
-        required: true
+        type: String,
+        required: [true , "Please enter user's phone number"]
     },
 
     photo: {
@@ -34,12 +32,12 @@ const UserSchema = new mongoose.Schema(
     gender: {
       type: String,
       enum: ["male", "female", "others"],
-      required: [true, "Please enter your gender"],
+      required: [true, "Please enter user's gender"],
     },
 
     dob: {
       type: Date,
-      required: [true, "Please enter date of birth"],
+      required: [true, "Please enter user's date of birth"],
     },
   },
 
@@ -48,16 +46,6 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-// function to create random name if user doesn't enter any name:
-function generateRandomName() {
-  const adjectives = ["Cool", "Brave", "Smart", "Clever", "Kind"];
-  const nouns = ["Tiger", "Eagle", "Bear", "Wolf", "Fox"];
-  const randomAdjective =
-    adjectives[Math.floor(Math.random() * adjectives.length)];
-  const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-
-  return `${randomAdjective}${randomNoun}${Math.floor(Math.random() * 1000)}`;
-}
 
 // virtural attribute 'age' derived from date of birth:
 UserSchema.virtual("age").get(function () {
