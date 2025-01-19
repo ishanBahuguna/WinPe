@@ -1,5 +1,5 @@
 import express from 'express';
-import { otp , verifyUser , signupUser } from '../controllers/user';
+import { otp , verifyUser } from '../controllers/user';
 import { singleUpload } from '../middlewares/multer';
 
 const app = express.Router();
@@ -11,7 +11,7 @@ app.post("/otp", singleUpload , otp)
 app.post("/verifyUser" , verifyUser)
 
 // /api/v1/user/signupVerify
-app.post("/signupUser", singleUpload , signupUser)
+// app.post("/signupUser", singleUpload , signupUser)
 
  
 export default app;

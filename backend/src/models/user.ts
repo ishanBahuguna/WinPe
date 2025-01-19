@@ -1,15 +1,14 @@
-import { doesNotMatch } from "assert";
 import mongoose from "mongoose";
 
 interface IUser extends Document {
     userName: string;
     phoneNumber: number;
-    photo?: string;
-    gender: "male" | "female" | "others";
-    dob: Date;
+    // photo?: string;
+    // gender: "male" | "female" | "others";
+    // dob: Date;
     createdAT:Date;
     updatedAt:Date;
-    age: number; // virtual attribute
+    // age: number; // virtual attribute
 }
 
 const UserSchema = new mongoose.Schema(
@@ -25,20 +24,20 @@ const UserSchema = new mongoose.Schema(
         required: [true , "Please enter user's phone number"]
     },
 
-    photo: {
-      type: String,
-    },
+    // photo: {
+    //   type: String,
+    // },
 
-    gender: {
-      type: String,
-      enum: ["male", "female", "others"],
-      required: [true, "Please enter user's gender"],
-    },
+    // gender: {
+    //   type: String,
+    //   enum: ["male", "female", "others"],
+    //   required: [true, "Please enter user's gender"],
+    // },
 
-    dob: {
-      type: Date,
-      required: [true, "Please enter user's date of birth"],
-    },
+    // dob: {
+    //   type: Date,
+    //   required: [true, "Please enter user's date of birth"],
+    // },
   },
 
   {
@@ -48,18 +47,18 @@ const UserSchema = new mongoose.Schema(
 
 
 // virtural attribute 'age' derived from date of birth:
-UserSchema.virtual("age").get(function () {
-  const today = new Date();
-  const dob = this.dob;
-  let age = today.getFullYear() - dob.getFullYear();
+// UserSchema.virtual("age").get(function () {
+//   const today = new Date();
+//   const dob = this.dob;
+//   let age = today.getFullYear() - dob.getFullYear();
 
-  if (
-    today.getMonth() < dob.getMonth() ||
-    (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
-  )
-    age--;
+//   if (
+//     today.getMonth() < dob.getMonth() ||
+//     (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
+//   )
+//     age--;
 
-  return age;
-});
+//   return age;
+// });
 
 export const User = mongoose.model<IUser>("User", UserSchema);

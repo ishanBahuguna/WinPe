@@ -77,7 +77,7 @@ export const verifyUser = async (
 
         OTP = "";
         const { phoneNumber } = req.body;
-        const user = await User.findOne({phoneNumber})
+        let user = await User.findOne({phoneNumber})
 
         // if user already exist login otherwise go to signup route for details of user
         if (user) {
@@ -94,46 +94,13 @@ export const verifyUser = async (
           });
         }
     
-        return res.status(200).json({
-            success:true,
-            message: "Please enter the details"
-        })
-    } catch(err:any) {
-        return res.status(400).json({
-            success:false,
-            message:err.message
-        })
-    }
-  }
 
-
-
-
-
-export const signupUser = async (
-    req: Request<{} , {} , NewUserRequestBody>,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-        
-    const { success } = NewUserRequestBodyValidator.safeParse(req.body);
-
-    if (!success) next(new ErrorHandler("Input data is incorrect!", 404));
-
-
-      const { phoneNumber, gender, dob } = req.body;
-  
-      const photo = req.file;
 
       const userName = generateRandomName();
 
-      const user = await User.create({
+        user = await User.create({
         userName,
         phoneNumber,
-        gender,
-        dob: new Date(dob),
-        photo: photo?.path,
       });
 
       
@@ -148,14 +115,67 @@ export const signupUser = async (
         success: true,
         message: `Welcome, ${user.userName}`,
         token: token
-      });
-    } catch (err: any) {
-      return res.status(404).json({
-        success: false,
-        message: err.message,
-      });
+    })
+    } catch(err : any) {
+        res.status(404).json({
+            success:false,
+            message:err
+        })
     }
-  };
+}
+
+
+
+
+
+
+
+// export const signupUser = async (
+//     req: Request<{} , {} , NewUserRequestBody>,
+//     res: Response,
+//     next: NextFunction
+//   ) => {
+//     try {
+        
+//     const { success } = NewUserRequestBodyValidator.safeParse(req.body);
+
+//     if (!success) next(new ErrorHandler("Input data is incorrect!", 404));
+
+
+//       const { phoneNumber, gender, dob } = req.body;
+  
+//       const photo = req.file;
+
+//       const userName = generateRandomName();
+
+//       const user = await User.create({
+//         userName,
+//         phoneNumber,
+//         gender,
+//         dob: new Date(dob),
+//         photo: photo?.path,
+//       });
+
+      
+//       // JWT token generation for authentication
+//       const id = user._id;
+//       const token = jwt.sign({
+//           id
+//       }, JWT_SECRET);
+  
+      
+//       return res.status(200).json({
+//         success: true,
+//         message: `Welcome, ${user.userName}`,
+//         token: token
+//       });
+//     } catch (err: any) {
+//       return res.status(404).json({
+//         success: false,
+//         message: err.message,
+//       });
+//     }
+//   };
 
 
 
